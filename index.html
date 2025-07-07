@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Selenium Test Runner</title>
+</head>
+<body>
+  <h1>Run Test Case</h1>
+  <textarea id="testCase" rows="6" cols="60" placeholder="Write your test case here..."></textarea><br><br>
+  <button onclick="runTest()">Run Test</button>
+  <p id="output"></p>
+
+  <script>
+    async function runTest() {
+      const testCase = document.getElementById("testCase").value;
+      const response = await fetch("http://localhost:8000/run-test", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ test_case: testCase })
+      });
+
+      const result = await response.json();
+      document.getElementById("output").innerText = JSON.stringify(result);
+    }
+  </script>
+</body>
+</html>
